@@ -1,0 +1,41 @@
+Redireccionamiento de la entrada/salida
+ls -l /home/oracle
+
+#Guardar la salida de un comando en un archivo nuevo, si el archivo ya existe se sobreescribe
+ls -l /home/oracle/scripts > ls.txt
+
+#Agregar información a un archivo existente. SI el archivo no existe falla
+ls -l /home/oracle/scripts >> ls.txt
+
+#Crear un archivo a partir de la salida del comando echo
+echo "Juan Carlos" > ls.txt
+
+#Crear un archivo en blanco o limpiar un archivo
+echo > ls.txt
+
+#Ejecutar procesos independientes de la terminal
+nohup ls -l
+nohup: ignoring input and appending output to 'nohup.out'
+
+nohup ls -l > prueba.txt
+
+#Ejecutar un script de oracle en la linea de comandos
+echo "select value from v\$system_parameter where name = 'db_name';" > script.sql
+
+sqlplus "/ as sysdba" @script.sql
+
+#Ejecutar un proceso independiente de la terminal (1) redireccionando la salida a un archivo (2)
+nohup sqlplus "/ as sysdba" @script.sql > prueba.txt
+
+#Ejecutar un proceso independiente de la terminal (1) redireccionando la salida a un archivo (2) en segundo plano (3)
+nohup sqlplus "/ as sysdba" @script.sql > prueba.txt &
+
+#Como verificar que el comando realmente se esta ejecutando en segundo plano
+ps aux | grep sqlplus
+
+#Descargar de un servidor ftp publico un archivo y redireccionar la salida a un archivo
+curl -s "ftp://ftp.gnu.org/welcome.msg" > prueba.txt
+
+#Actividad
+yum install youtube-dl
+youtube-dl https://www.youtube.com/watch?v=yetBsgViVvM&list=RDMMyetBsgViVvM&start_radio=1&ab_channel=MrBigVEVO

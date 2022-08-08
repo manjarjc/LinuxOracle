@@ -1,0 +1,54 @@
+Crear la siguiente estructura de directorios dentro del home del usuario oracle:
+
+bancolombia
+	|
+	|- EVC
+	|	|
+	|	|- Nombre de tu celula
+	|	
+	|- Recursos
+	|	|
+	|	|- Manuales
+	|	|- instaladores
+	|	|- Scripts
+	|
+	|- Estandares
+		|
+		|-bases de datos
+		|-devops
+		|-infraestructura
+
+yum install -y tree
+
+mkdir -p bancolombia/{Recursos,EVC,Estandares}
+mkdir -p bancolombia/EVC/nukak
+mkdir -p bancolombia/Recursos/{Manuales,instaladores,Scripts}
+mkdir -p bancolombia/Estandares/{"bases de datos",devops,infraestructura}
+
+rm -rf /home/oracle/bancolombia
+rmdir -p /home/oracle/bancolombia => no funciona
+
+ifconfig | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
+
+grep error /u01/app/oracle/diag/rdbms/cdb1/cdb1/trace/alert_cdb1.log
+
+grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" /u01/app/oracle/diag/rdbms/cdb1/cdb1/trace/alert_cdb1.log | sort | uniq -c
+
+[0-9]{1,3} => 1 12 123 . 1 12 123 . 1 12 123
+
+grep -oE "\b[0-9]{3}\b" /u01/app/oracle/diag/rdbms/cdb1/cdb1/trace/alert_cdb1.log | sort | uniq
+grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" /u01/app/oracle/diag/rdbms/cdb1/cdb1/trace/alert_cdb1.log > ip.txt
+grep "2022-07-27" /u01/app/oracle/diag/rdbms/cdb1/cdb1/trace/alert_cdb1.log
+
+
+
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf upgrade
+yum install snapd
+systemctl enable --now snapd.socket
+ln -s /var/lib/snapd/snap /snap
+reboot
+snap install unimatrix --beta
+unimatrix
+
+https://snapcraft.io/install/unimatrix/rhel

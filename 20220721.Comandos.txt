@@ -1,0 +1,12 @@
+#Iniciar sesion
+login: root
+password: oracle
+
+#Comando para obtener la dirección ip. Buscar la linea con el numero 2
+ip a
+
+#Comando para apagar la maquina virtual
+init 0
+
+#Cambiarse al usuario de oracle
+sudo su - oracle

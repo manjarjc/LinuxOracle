@@ -1,0 +1,130 @@
+****************************************
+EN LA CLASE DE HOY VEREMOS
+****************************************
+
+1. Introducción a ORACLE
+1.2 Ingresar al SQLPLUS
+2. Linux
+2.1 Operaciones con archivos
+2.2 Redireccionamiento de la entrada/salida
+2.3 Monitoreo de procesos: top, mem, ps
+2.4 Ejecutar un proceso que continue aunque cerremos el shell
+3. Actividad de Web Scrapping: obtener una lista de las imagenes que se muestran en una página web
+
+****************************************
+1. Oracle
+****************************************
+
+Database : 	p.84. Collection of physical operating system files or disks
+
+Instance : 	p.84. Set of Oracle background processes or threads and a 
+			shared memory area, which is memory that is shared 
+			across those threads or processes running on a single computer
+
+System Global Area (SGA)
+Fast Recovery Area (FRA)
+Process Global Area (PGA)
+User Global Area (UGA)
+Automatic Storage Management (ASM)
+
+UNIX/Linux operating system
+	Oracle implemented as many different operating system processes, 
+	virtually a process per major function
+
+Windows platform
+	Oracle is implemented as a single process with multiple threads
+
+Comando para monitorear consumo de recursos
+top
+para salir: CTRL + C
+
+****************************************
+Tipos de base de arquitectura
+****************************************
+Single tenant
+	Versions 6 through 11g
+
+	Single-Tenant (Non-container) Database
+		self-contained set of datafiles, control files, redo log files, parameter files, and so on 
+		that include all of the Oracle metadata (the definition of ALL_OBJECTS, for example), 
+		Oracle data, and Oracle code (such as the code for DBMS_OUTPUT), in addition to all of 
+		the application metadata, data, and code
+
+Multitenant
+	Starting with Oracle 12c. container database/pluggable database
+
+
+****************************************
+Listar los procesos pmon y smon del servidor 
+****************************************
+con esto podemos ver qué bases de datos están iniciadas/montadas/abiertas
+ps -fea | grep "pmon\|smon"
+
+****************************************
+Variables Oracle de importancia
+****************************************
+ORACLE_BASE=/u01/app/oracle 						: CARPETA RAIZ DONDE SE INSTALA ORACLE
+ORACLE_HOME=/$ORACLE_BASE/product/19.3.0/dbhome_1	: CARPETA DE LA VERSIÓN DE ORACLE A INSTALAR
+ORACLE_SID=cdb1										: BASE DE DATOS ACTUAL
+
+pfile  => archivo de configuración de la base de datos en texto plano
+spfile => archivo de configuración de la base de datos en formato binario
+
+****************************************
+Ingresar con el SQLPLUS
+****************************************
+
+sqlplus / as sysdba
+
+#Nombre de la base de datos
+select value from v$system_parameter where name = 'db_name';
+
+#Obtener el nombre y el estado de la instancia
+select status from v$instance;
+
+#Hacer una copia del archivo spfile
+cp /u01/app/oracle/product/19.3.0/dbhome_1/dbs/spfilecdb1.ora backup_config/
+
+****************************************
+2. Linux
+****************************************
+
+****************************************
+Operaciones con archivos
+****************************************
+Crear archivos
+Editar archivos
+Copiar archivos
+Mover / renombrar archivos
+
+mv /home/oracle/backup_config /home/oracle/backup
+mkdir /home/oracle/backup/config
+mv /home/oracle/backup/spfilecdb1.ora /home/oracle/backup/config/
+mv /home/oracle/backup/config/spfilecdb1.ora /home/oracle/backup/config/20220802_spfilecdb1.ora
+
+
+****************************************
+Redireccionamiento de la entrada/salida
+****************************************
+Guardar la salida de un comando en un archivo
+
+Para crear / sobreescribir un archivo			: >
+Para agregar información a un archivo existente	: >>
+
+****************************************
+Monitorear procesos
+****************************************
+top
+ps
+
+****************************************
+Monitorear conexiones a los puertos
+****************************************
+netstat
+
+curl => descarga el codigo fuente de un sitio web
+
+curl 'https://www.elcolombiano.com' | grep -Po "(?<=href=[\"'])[^\"']*" | grep ".jpg" 
+
+wget -U Mozilla -e robots=off --tries=3 --mirror --restrict-file-names=windows --no-host-directories -E -H -k -K -p http://iefeyalegriagranizal.master2000.net -o wget.txt
+wget -U Mozilla --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --domains csciviles.com --no-parent csciviles.com
